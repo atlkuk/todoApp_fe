@@ -13,7 +13,7 @@ export class ListComponent implements OnInit {
 
   todos: any = null;
 
-  list: any = null;
+  list: any = {title: ''};
 
   private baseUrl = 'http://localhost:8000/api/';
 
@@ -29,7 +29,6 @@ export class ListComponent implements OnInit {
     this.http.get(this.baseUrl + 'mylists/' + id).subscribe(data => {
       // Read the result field from the JSON response.
       this.list = data;
-      console.log(data);
     });
   }
 

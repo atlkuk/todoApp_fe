@@ -3,7 +3,7 @@
     <div class="col-sm">
       <mat-toolbar color="primary">
         <button mat-icon-button routerLink="/list/{{id_list}}"><mat-icon>keyboard_arrow_left</mat-icon></button>
-        {{todo.title}} Edit
+        {{todo.title}}
       </mat-toolbar>
     </div>
   </div>
@@ -17,9 +17,16 @@
           <input matInput placeholder="Todo Name" value="{{todo.title}}">
         </mat-form-field>
         <mat-form-field class="example-full-width">
-          <input matInput [matDatepicker]="picker" placeholder="Expire Date" [value]="todo.expire_date">
+          <input matInput [matDatepicker]="picker" name="expire_date" placeholder="Expire Date" [value]="todo.expire_date">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <mat-select placeholder="My lists">
+            <mat-option *ngFor="let list of lists" [value]="list.id">
+              {{ list.title }}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
     </form>

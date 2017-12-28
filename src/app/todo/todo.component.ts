@@ -10,10 +10,12 @@ import { FormControl } from '@angular/forms';
 })
 export class TodoComponent implements OnInit {
 
-  todo: any = null;
+  todo: any = {title: '', expire_date: ''};
 
   list: any = null;
 
+  lists: any = null;
+  
   id_list: string = null;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) { }
@@ -21,6 +23,10 @@ export class TodoComponent implements OnInit {
   private baseUrl = 'http://localhost:8000/api/';
 
   getTodoDetails(id, idList): void {
+    this.http.get(this.baseUrl + 'mylists').subscribe(data => {
+      // Read the result field from the JSON response.
+      this.lists = data;
+    });
     this.http.get(this.baseUrl + 'mylists/' + idList).subscribe(data => {
       // Read the result field from the JSON response.
       this.list = data;
@@ -28,8 +34,8 @@ export class TodoComponent implements OnInit {
     this.http.get(this.baseUrl + 'items/' + id).subscribe(data => {
       // Read the result field from the JSON response.
       this.todo = data;
-      this.todo.expire_date = new FormControl(new Date());
-      // console.log(new FormControl(new Date()));
+      this.todo.expire_date = new Date(this.todo.expire_date);
+      // console.log(this.todo);
     });
   }
 
