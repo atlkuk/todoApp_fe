@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <mat-toolbar color="primary">
+        <button mat-icon-button routerLink="/list/{{id_list}}"><mat-icon>keyboard_arrow_left</mat-icon></button>
+        {{todo.title}} Edit
+      </mat-toolbar>
+    </div>
+  </div>
+</div>
+<br>
+<div class="container">
+  <div class="row">
+    <form class="example-full-width">
+      <div class="col-sm">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Todo Name" value="{{todo.title}}">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput [matDatepicker]="picker" placeholder="Expire Date" [value]="todo.expire_date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+</div>
