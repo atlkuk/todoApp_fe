@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AppGlobals } from '../../shared/app.globals';
 
 @Component({
   selector: 'app-list',
@@ -9,16 +10,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class ListComponent implements OnInit {
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) { }
+  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private _global: AppGlobals) { }
 
   todos: any = null;
 
   list: any = {title: ''};
 
-  private baseUrl = 'http://localhost:8000/api/';
-
   loadTodos(id): void {
-    this.http.get(this.baseUrl + 'mylists/' + id + '/items').subscribe(data => {
+    this.http.get(this._global.baseAppUrl + 'mylists/' + id + '/items').subscribe(data => {
       // Read the result field from the JSON response.
       this.todos = data;
     });
@@ -26,9 +25,16 @@ export class ListComponent implements OnInit {
   }
 
   getListDetails(id): void {
-    this.http.get(this.baseUrl + 'mylists/' + id).subscribe(data => {
+    this.http.get(this._global.baseAppUrl + 'mylists/' + id).subscribe(data => {
       // Read the result field from the JSON response.
       this.list = data;
+      this._global.list = data;
+    });
+  }
+
+  deleteTodo(todo): void {
+    this.http.delete(this._global.baseAppUrl + 'items/' + todo.id).subscribe(data => {
+      this.loadTodos(todo.list_id);
     });
   }
 

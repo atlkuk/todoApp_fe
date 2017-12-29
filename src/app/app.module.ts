@@ -41,11 +41,13 @@ import {
   MatToolbarModule,
   MatTooltipModule,
   MatStepperModule, } from '@angular/material';
+import { AppGlobals } from '../shared/app.globals';
 
 const appRoutes: Routes = [
   { path: 'lists', component: ListsComponent },
   { path: 'list/:id', component: ListComponent },
-  { path: 'list/:id_list/todo/:id_todo', component: TodoComponent },
+  { path: 'todo/edit/:id_todo', component: TodoComponent },
+  { path: 'todo/new', component: TodoComponent },
   {
     path: '',
     redirectTo: '/lists',
@@ -102,7 +104,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     FormsModule,
   ],
-  providers: [],
+  providers: [AppGlobals],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -2,8 +2,8 @@
   <div class="row">
     <div class="col-sm">
       <mat-toolbar color="primary">
-        <button mat-icon-button routerLink="/list/{{id_list}}"><mat-icon>keyboard_arrow_left</mat-icon></button>
-        {{todo.title}}
+        <button mat-icon-button routerLink="/list/{{list.id}}"><mat-icon>keyboard_arrow_left</mat-icon></button>
+        {{todo.title ? todo.title : "New Todo"}}
       </mat-toolbar>
     </div>
   </div>
@@ -14,15 +14,15 @@
     <form class="example-full-width">
       <div class="col-sm">
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Todo Name" value="{{todo.title}}">
+          <input matInput placeholder="Todo Name" name="title" [(ngModel)]="todo.title" value="{{todo.title}}">
         </mat-form-field>
         <mat-form-field class="example-full-width">
-          <input matInput [matDatepicker]="picker" name="expire_date" placeholder="Expire Date" [value]="todo.expire_date">
+          <input matInput [matDatepicker]="picker" name="expire_date" [(ngModel)]="todo.expire_date" placeholder="Expire Date" [value]="todo.expire_date">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
         <mat-form-field class="example-full-width">
-          <mat-select placeholder="My lists">
+          <mat-select placeholder="My lists" [(value)]="todo.list_id" name="list_id" [(ngModel)]="todo.list_id">
             <mat-option *ngFor="let list of lists" [value]="list.id">
               {{ list.title }}
             </mat-option>
@@ -30,5 +30,12 @@
         </mat-form-field>
       </div>
     </form>
+  </div>
+  <div class="row">
+      <div class="col-sm">
+        <button mat-raised-button color="primary" (click)="saveTodo()">Save</button>
+        <button mat-raised-button color="warn" (click)="deleteTodo()">Delete</button>
+        <button mat-raised-button routerLink="/list/{{list.id}}">Cancel</button>
+      </div>
   </div>
 </div>

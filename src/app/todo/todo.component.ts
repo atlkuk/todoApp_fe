@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
+import { AppGlobals } from '../../shared/app.globals';
 
 @Component({
   selector: 'app-todo',
@@ -15,23 +16,13 @@ export class TodoComponent implements OnInit {
   list: any = null;
 
   lists: any = null;
-  
+
   id_list: string = null;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) { }
+  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private _global: AppGlobals) { }
 
-  private baseUrl = 'http://localhost:8000/api/';
-
-  getTodoDetails(id, idList): void {
-    this.http.get(this.baseUrl + 'mylists').subscribe(data => {
-      // Read the result field from the JSON response.
-      this.lists = data;
-    });
-    this.http.get(this.baseUrl + 'mylists/' + idList).subscribe(data => {
-      // Read the result field from the JSON response.
-      this.list = data;
-    });
-    this.http.get(this.baseUrl + 'items/' + id).subscribe(data => {
+  getTodoDetails(id): void {
+    this.http.get(this._global.baseAppUrl + 'items/' + id).subscribe(data => {
       // Read the result field from the JSON response.
       this.todo = data;
       this.todo.expire_date = new Date(this.todo.expire_date);
@@ -39,10 +30,36 @@ export class TodoComponent implements OnInit {
     });
   }
 
+  saveTodo(): void {
+    const timezone = this.todo.expire_date.getTimezoneOffset() * 60000;
+    this.todo.expire_date = (new Date((this.todo.expire_date - timezone))).toISOString().slice(0, 19).replace('T', ' ');
+    console.log(this.todo);
+    // se non ho l'id creo nuovo todo
+    if (!this.route.snapshot.paramMap.get('id_todo')) {
+      this.http.post(this._global.baseAppUrl + 'items', this.todo).subscribe(data => {
+        this.router.navigateByUrl('/list/' + this.todo.list_id);
+      });
+    }else { // altrimenti update
+      this.http.patch(this._global.baseAppUrl + 'items/' + this.todo.id, this.todo).subscribe(data => {
+        this.router.navigateByUrl('/list/' + this.todo.list_id);
+      });
+    }
+  }
+
+  deleteTodo(): void {
+    this.http.delete(this._global.baseAppUrl + 'items/' + this.todo.id).subscribe(data => {
+      this.router.navigateByUrl('/list/' + this.list.id);
+    });
+  }
+
   ngOnInit() {
+    this.lists = this._global.lists;
+    this.list = this._global.list;
+    console.log(this._global);
     const id = this.route.snapshot.paramMap.get('id_todo');
-    this.id_list = this.route.snapshot.paramMap.get('id_list');
-    this.getTodoDetails(id, this.id_list);
+    if (this.route.snapshot.paramMap.get('id_todo')){
+      this.getTodoDetails(id);
+    }
   }
 
 }
