@@ -16,6 +16,8 @@ export class ListComponent implements OnInit {
 
   list: any = {title: ''};
 
+  now: any = Date.now();
+
   loadTodos(id): void {
     this.http.get(this._global.baseAppUrl + 'mylists/' + id + '/items').subscribe(data => {
       // Read the result field from the JSON response.
@@ -36,6 +38,12 @@ export class ListComponent implements OnInit {
     this.http.delete(this._global.baseAppUrl + 'items/' + todo.id).subscribe(data => {
       this.loadTodos(todo.list_id);
     });
+  }
+
+  doneTodo(todo): void {
+    todo.done = todo.done === true ? 1 : 0;
+    console.log(todo.done);
+    this.http.patch(this._global.baseAppUrl + 'items/' + todo.id, todo).subscribe();
   }
 
   ngOnInit() {

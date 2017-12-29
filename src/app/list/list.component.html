@@ -5,8 +5,8 @@
         <button mat-icon-button routerLink="/lists"><mat-icon>keyboard_arrow_left</mat-icon></button>
         {{list.title}}
         <span class="example-spacer"></span>
-        <button mat-icon-button><mat-icon>edit</mat-icon></button>
-        <button mat-icon-button routerLink="/todo/new"><mat-icon>playlist_add</mat-icon></button>
+        <button mat-icon-button routerLink="/list/edit/{{list.id}}"><mat-icon matTooltip="Edit list">edit</mat-icon></button>
+        <button mat-icon-button routerLink="/todo/new"><mat-icon matTooltip="Create new todo">playlist_add</mat-icon></button>
       </mat-toolbar>
     </div>
   </div>
@@ -17,8 +17,9 @@
     <div class="col-sm">
       <mat-nav-list>
         <mat-list-item *ngFor="let todo of todos">
-          <mat-checkbox>&nbsp;</mat-checkbox>
-          <span class="example-spacer" routerLink="/todo/edit/{{todo.id}}">{{todo.title}}</span>
+          <mat-checkbox (change)="doneTodo(todo)" [(ngModel)]="todo.done">&nbsp;</mat-checkbox>
+          <span class="example-spacer" routerLink="/todo/edit/{{todo.id}}" [ngClass]="{'underline': todo.done}">{{todo.title}}</span>
+          <span class="small-font" [ngClass]="{'warning': ((todo.expire_date | myDate: 'timestamp') < now) && !todo.done}">{{todo.expire_date | date:"M-dd-yyyy"}}</span>
           <button mat-icon-button>
             <mat-icon color="warn" (click)="deleteTodo(todo)">delete</mat-icon>
           </button>

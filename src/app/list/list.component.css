@@ -7,3 +7,12 @@
 .mat-checkbox{
   height: 24px;
 }
+.small-font{
+  font-size: 12px;
+}
+.warning{
+  color: red;
+}
+.underline{
+  text-decoration: line-through;
+}

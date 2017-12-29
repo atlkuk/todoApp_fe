@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <mat-toolbar color="primary">
+        <button mat-icon-button routerLink="/list/{{list.id}}">
+          <mat-icon>keyboard_arrow_left</mat-icon>
+        </button>
+        {{list.title ? list.title : "New List"}}
+      </mat-toolbar>
+    </div>
+  </div>
+</div>
+<br>
+<div class="container">
+  <div class="row">
+    <form class="example-full-width">
+      <div class="col-sm">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="List Title" name="title" required [(ngModel)]="list.title" value="{{list.title}}">
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+  <div class="row">
+    <div class="col-sm">
+      <button mat-raised-button color="primary" (click)="saveList()">Save</button>
+      <button mat-raised-button routerLink="/list/{{list.id}}">Cancel</button>
+    </div>
+  </div>
+</div>

@@ -42,12 +42,16 @@ import {
   MatTooltipModule,
   MatStepperModule, } from '@angular/material';
 import { AppGlobals } from '../shared/app.globals';
+import { ListEditComponent } from './list/list-edit/list-edit.component';
+import { MyDatePipe } from '../pipes/my-date.pipe';
 
 const appRoutes: Routes = [
   { path: 'lists', component: ListsComponent },
+  { path: 'list/new', component: ListEditComponent },
   { path: 'list/:id', component: ListComponent },
-  { path: 'todo/edit/:id_todo', component: TodoComponent },
+  { path: 'list/edit/:id_list', component: ListEditComponent },
   { path: 'todo/new', component: TodoComponent },
+  { path: 'todo/edit/:id_todo', component: TodoComponent },
   {
     path: '',
     redirectTo: '/lists',
@@ -61,7 +65,9 @@ const appRoutes: Routes = [
     AppComponent,
     ListsComponent,
     ListComponent,
-    TodoComponent
+    TodoComponent,
+    ListEditComponent,
+    MyDatePipe
   ],
   imports: [
     RouterModule.forRoot(
