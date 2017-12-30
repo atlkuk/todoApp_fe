@@ -2,8 +2,7 @@
   <div class="row">
     <div class="col-sm">
       <mat-toolbar color="primary">
-        <button mat-icon-button routerLink="/lists"><mat-icon>keyboard_arrow_left</mat-icon></button>
-        {{list.title}}
+        <button mat-icon-button routerLink="/dashboard"><mat-icon>keyboard_arrow_left</mat-icon> {{list.title}}</button>
         <span class="example-spacer"></span>
         <button mat-icon-button routerLink="/list/edit/{{list.id}}"><mat-icon matTooltip="Edit list">edit</mat-icon></button>
         <button mat-icon-button routerLink="/todo/new"><mat-icon matTooltip="Create new todo">playlist_add</mat-icon></button>

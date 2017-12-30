@@ -26,6 +26,7 @@ export class TodoComponent implements OnInit {
       // Read the result field from the JSON response.
       this.todo = data;
       this.todo.expire_date = new Date(this.todo.expire_date);
+      this.list = {'id': this.todo.list_id};
       // console.log(this.todo);
     });
   }
@@ -53,11 +54,10 @@ export class TodoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.lists = this._global.lists;
-    this.list = this._global.list;
-    console.log(this._global);
+    this.lists = JSON.parse(localStorage.getItem('lists'));
+
     const id = this.route.snapshot.paramMap.get('id_todo');
-    if (this.route.snapshot.paramMap.get('id_todo')){
+    if (this.route.snapshot.paramMap.get('id_todo')) {
       this.getTodoDetails(id);
     }
   }

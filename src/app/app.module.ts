@@ -46,15 +46,14 @@ import { ListEditComponent } from './list/list-edit/list-edit.component';
 import { MyDatePipe } from '../pipes/my-date.pipe';
 
 const appRoutes: Routes = [
-  { path: 'lists', component: ListsComponent },
+  { path: 'dashboard', component: ListsComponent },
   { path: 'list/new', component: ListEditComponent },
-  { path: 'list/:id', component: ListComponent },
   { path: 'list/edit/:id_list', component: ListEditComponent },
   { path: 'todo/new', component: TodoComponent },
   { path: 'todo/edit/:id_todo', component: TodoComponent },
   {
     path: '',
-    redirectTo: '/lists',
+    redirectTo: '/dashboard',
     pathMatch: 'full'
   },
   { path: '**', component: ListsComponent }

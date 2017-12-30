@@ -4,7 +4,8 @@
       <mat-toolbar color="primary">
         Dashboard
         <span class="example-spacer"></span>
-        <button mat-icon-button routerLink="/list/new"><mat-icon matTooltip="Create new list">playlist_add</mat-icon></button>
+        <button mat-icon-button routerLink="/list/new"><mat-icon matTooltip="Create new list">add</mat-icon></button>
+        <button mat-icon-button routerLink="/todo/new"><mat-icon matTooltip="Create new todo">playlist_add</mat-icon></button>
       </mat-toolbar>
     </div>
   </div>
@@ -13,11 +14,26 @@
 <div class="container">
   <div class="row">
     <div class="col-sm">
+      <mat-form-field class="example-full-width">
+        <mat-select placeholder="Filter by List" name="ids" [(ngModel)]="ids" multiple (change)="loadTodos()">
+          <mat-option *ngFor="let list of lists" [value]="list.id">
+            {{ list.title }}
+            <mat-icon color="primary" class="edit-list" routerLink="/list/edit/{{list.id}}">edit</mat-icon>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm">
       <mat-nav-list>
-        <mat-list-item *ngFor="let list of lists">
-          <span class="example-spacer" routerLink="/list/{{list.id}}">{{list.title}}</span>
+        <mat-list-item *ngFor="let todo of todos">
+          <mat-checkbox (change)="doneTodo(todo)" [(ngModel)]="todo.done">&nbsp;</mat-checkbox>
+          <span class="example-spacer" routerLink="/todo/edit/{{todo.id}}" [ngClass]="{'underline': todo.done}">{{todo.title}}</span>
+          <span class="small-font" [ngClass]="{'warning': ((todo.expire_date | myDate: 'timestamp') < now) && !todo.done}">{{todo.expire_date | date:"M-dd-yyyy"}}</span>
           <button mat-icon-button>
-            <mat-icon color="primary" routerLink="/list/edit/{{list.id}}">edit</mat-icon>
+            <mat-icon color="warn" (click)="deleteTodo(todo)">delete</mat-icon>
           </button>
         </mat-list-item>
       </mat-nav-list>

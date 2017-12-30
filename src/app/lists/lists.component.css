@@ -4,3 +4,24 @@
   height: 100%;
   line-height: 48px;
 }
+.mat-checkbox{
+  height: 24px;
+}
+.small-font{
+  font-size: 12px;
+}
+.warning{
+  color: red;
+}
+.underline{
+  text-decoration: line-through;
+}
+.example-full-width{
+  width: 100%;
+}
+.mat-form-field{
+  margin-top: 10px;
+}
+.edit-list{
+  float: right; margin-top:10px;
+}
