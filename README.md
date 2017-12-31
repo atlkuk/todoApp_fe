@@ -5,7 +5,7 @@ Go to www/todoApp folder previously generated
 ## How to install via git
 clone repository `git clone https://github.com/atlkuk/todoApp_fe.git` into todoApp folder in www directory
 
-move into **todoApp_fe** folder and run npm install
+move into **todoApp_fe** folder and run `npm install`
 
 ## Configure endpoint
 
