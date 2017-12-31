@@ -18,22 +18,28 @@
         <mat-select placeholder="Filter by List" name="ids" [(ngModel)]="ids" multiple (change)="loadTodos()">
           <mat-option *ngFor="let list of lists" [value]="list.id">
             {{ list.title }}
-            <mat-icon color="primary" class="edit-list" routerLink="/list/edit/{{list.id}}">edit</mat-icon>
           </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
   </div>
-
+  
   <div class="row">
     <div class="col-sm">
-      <mat-nav-list>
-        <mat-list-item *ngFor="let todo of todos">
-          <mat-checkbox (change)="doneTodo(todo)" [(ngModel)]="todo.done">&nbsp;</mat-checkbox>
-          <span class="example-spacer" routerLink="/todo/edit/{{todo.id}}" [ngClass]="{'underline': todo.done}">{{todo.title}}</span>
-          <span class="small-font" [ngClass]="{'warning': ((todo.expire_date | myDate: 'timestamp') < now) && !todo.done}">{{todo.expire_date | date:"M-dd-yyyy"}}</span>
+      <mat-nav-list *ngFor="let todo of todos">
+        <h3 mat-subheader>
+          {{todo.title}}
+          <span class="example-spacer"></span>
+          <button mat-raised-button routerLink="/list/edit/{{todo.id}}" color="primary">
+            Edit
+          </button>
+        </h3>
+        <mat-list-item *ngFor="let item of todo.items">
+          <mat-checkbox (change)="doneTodo(item)" [(ngModel)]="item.done">&nbsp;</mat-checkbox>
+          <span class="example-spacer" routerLink="/todo/edit/{{item.id}}" [ngClass]="{'underline': item.done}">{{item.title}}</span>
+          <span class="small-font" [ngClass]="{'warning': ((item.expire_date | myDate: 'timestamp') < now) && !item.done}">{{item.expire_date | date:"M-dd-yyyy"}}</span>
           <button mat-icon-button>
-            <mat-icon color="warn" (click)="deleteTodo(todo)">delete</mat-icon>
+            <mat-icon color="warn" (click)="deleteTodo(item)">delete</mat-icon>
           </button>
         </mat-list-item>
       </mat-nav-list>

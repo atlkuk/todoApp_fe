@@ -16,7 +16,8 @@
     <form class="example-full-width">
       <div class="col-sm">
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="List Title" name="title" required [(ngModel)]="list.title" value="{{list.title}}">
+          <input matInput placeholder="List Title" name="title" #title="ngModel" required [(ngModel)]="list.title" value="{{list.title}}">
+          <mat-error *ngIf="title.errors && title.errors.required">Mandatory field</mat-error>
         </mat-form-field>
       </div>
     </form>

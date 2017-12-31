@@ -30,7 +30,6 @@ export class ListComponent implements OnInit {
     this.http.get(this._global.baseAppUrl + 'mylists/' + id).subscribe(data => {
       // Read the result field from the JSON response.
       this.list = data;
-      this._global.list = data;
     });
   }
 

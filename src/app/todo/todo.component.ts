@@ -32,18 +32,20 @@ export class TodoComponent implements OnInit {
   }
 
   saveTodo(): void {
-    const timezone = this.todo.expire_date.getTimezoneOffset() * 60000;
-    this.todo.expire_date = (new Date((this.todo.expire_date - timezone))).toISOString().slice(0, 19).replace('T', ' ');
-    console.log(this.todo);
-    // se non ho l'id creo nuovo todo
-    if (!this.route.snapshot.paramMap.get('id_todo')) {
-      this.http.post(this._global.baseAppUrl + 'items', this.todo).subscribe(data => {
-        this.router.navigateByUrl('/list/' + this.todo.list_id);
-      });
-    }else { // altrimenti update
-      this.http.patch(this._global.baseAppUrl + 'items/' + this.todo.id, this.todo).subscribe(data => {
-        this.router.navigateByUrl('/list/' + this.todo.list_id);
-      });
+    if (this.todo.title && this.todo.expire_date && this.todo.list_id) {
+      const timezone = this.todo.expire_date.getTimezoneOffset() * 60000;
+      this.todo.expire_date = (new Date((this.todo.expire_date - timezone))).toISOString().slice(0, 19).replace('T', ' ');
+      console.log(this.todo);
+      // se non ho l'id creo nuovo todo
+      if (!this.route.snapshot.paramMap.get('id_todo')) {
+        this.http.post(this._global.baseAppUrl + 'items', this.todo).subscribe(data => {
+          this.router.navigateByUrl('/list/' + this.todo.list_id);
+        });
+      }else { // altrimenti update
+        this.http.patch(this._global.baseAppUrl + 'items/' + this.todo.id, this.todo).subscribe(data => {
+          this.router.navigateByUrl('/list/' + this.todo.list_id);
+        });
+      }
     }
   }
 

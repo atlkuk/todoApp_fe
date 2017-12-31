@@ -13,19 +13,22 @@
     <form class="example-full-width">
       <div class="col-sm">
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Todo Name" name="title" [(ngModel)]="todo.title" value="{{todo.title}}">
+          <input matInput placeholder="Todo Name" #title="ngModel" required name="title" [(ngModel)]="todo.title" value="{{todo.title}}">
+          <mat-error *ngIf="title.errors && title.errors.required">Mandatory field</mat-error>
         </mat-form-field>
         <mat-form-field class="example-full-width">
-          <input matInput [matDatepicker]="picker" name="expire_date" [(ngModel)]="todo.expire_date" placeholder="Expire Date" [value]="todo.expire_date">
+          <input matInput [matDatepicker]="picker" #expire="ngModel" required name="expire_date" [(ngModel)]="todo.expire_date" placeholder="Expire Date" [value]="todo.expire_date">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="expire.errors && expire.errors.required">Error formatting date</mat-error>
         </mat-form-field>
         <mat-form-field class="example-full-width">
-          <mat-select placeholder="My lists" [(value)]="todo.list_id" name="list_id" [(ngModel)]="todo.list_id">
+          <mat-select placeholder="My lists" #listid="ngModel" required [(value)]="todo.list_id" name="list_id" [(ngModel)]="todo.list_id">
             <mat-option *ngFor="let list of lists" [value]="list.id">
               {{ list.title }}
             </mat-option>
           </mat-select>
+          <mat-error *ngIf="listid.errors && listid.errors.required">Mandatory field</mat-error>
         </mat-form-field>
       </div>
     </form>
