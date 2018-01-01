@@ -1,4 +1,5 @@
 # todoApp_fe
+Install **todoApp_be** repository first
 
 Go to www/todoApp folder previously generated
 
@@ -17,6 +18,6 @@ readonly baseAppUrl: string = 'http://localhost/todoApp/todoApp_be/public/api/';
 ```
 
 ## Compile and Run
-into **todoApp_fe** folder run `ng serve`
+into **todoApp_fe** folder run `ng serve -o`
 
 go to http://locahost:4200/ and all it's done!!
